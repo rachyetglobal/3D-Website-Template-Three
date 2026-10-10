@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en" class="is-loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>The Aurelia Residence — A Private Residence</title>
+  <meta name="description" content="Step inside a contemporary private residence through a scroll-controlled architectural film.">
+  <meta name="theme-color" content="#14110f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2314110f'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-style='italic' font-size='21' fill='%23d08a52' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/images/poster.jpg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip the film tour</a>
+
+  <!-- Preloader: real progress of the film download -->
+  <div class="preloader" data-preloader aria-hidden="true">
+    <div class="preloader__top">
+      <span class="preloader__brand" data-bind="name">The Aurelia Residence</span>
+      <span class="preloader__hint">Preparing the film</span>
+    </div>
+    <div class="preloader__count"><span data-preloader-count>0</span><sup>%</sup></div>
+    <div class="preloader__bar"><i data-preloader-bar></i></div>
+  </div>
+
+  <!-- Cursor follower (fine pointers only) -->
+  <div class="cursor" data-cursor aria-hidden="true"><span class="cursor__label" data-cursor-label></span></div>
+
+  <!-- Navigation -->
+  <header class="site-nav" data-nav>
+    <a class="wordmark" href="#top" aria-label="Back to the start of the tour">
+      <span class="wordmark__mark" aria-hidden="true">A</span>
+      <span class="wordmark__name" data-bind="name">The Aurelia Residence</span>
+    </a>
+    <nav class="site-nav__links" aria-label="Sections">
+      <a href="#top">Film</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#details">Details</a>
+    </nav>
+    <div class="site-nav__actions">
+      <a class="btn btn--pill site-nav__cta" href="#enquire" data-magnetic><span>Private Viewing</span><i aria-hidden="true">&rarr;</i></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+        <span class="menu-toggle__label">Menu</span>
+        <span class="menu-toggle__icon" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" hidden data-menu>
+    <div class="menu__media" aria-hidden="true"><img data-menu-img src="assets/images/scenes/facade-md.webp" alt=""></div>
+    <nav class="menu__inner" aria-label="Main">
+      <ol class="menu__list">
+        <li><a href="#top" data-menu-link data-img="facade"><span>01</span>The Film</a></li>
+        <li><a href="#overview" data-menu-link data-img="living"><span>02</span>The Residence</a></li>
+        <li><a href="#rooms" data-menu-link data-img="kitchen"><span>03</span>Room by Room</a></li>
+        <li><a href="#gallery" data-menu-link data-img="bedroom"><span>04</span>Gallery</a></li>
+        <li><a href="#details" data-menu-link data-img="staircase"><span>05</span>Details</a></li>
+        <li><a href="#enquire" data-menu-link data-img="balcony"><span>06</span>Private Viewing</a></li>
+        <li><a href="explore-3d.html" data-menu-link data-img="landing"><span>07</span>3D Model</a></li>
+      </ol>
+    </nav>
+  </div>
+
+  <main id="top">
+    <!-- ============ CINEMATIC TOUR ============ -->
+    <section class="tour" id="tour" aria-label="Film tour of the residence" data-tour>
+      <div class="tour__sticky">
+        <div class="tour__frame">
+          <div class="tour__media" aria-hidden="true">
+            <img class="tour__poster" src="assets/images/poster.jpg" alt="" width="1920" height="1080" decoding="async" fetchpriority="high">
+            <div class="tour__stills" data-stills></div>
+            <video class="tour__video" data-video muted playsinline webkit-playsinline disablepictureinpicture disableremoteplayback preload="none" poster="assets/images/poster.jpg" tabindex="-1"></video>
+            <img class="tour__final" data-final alt="" decoding="async">
+            <div class="tour__shade"></div>
+            <div class="tour__grain"></div>
+          </div>
+        </div>
+
+        <div class="tour__captions" data-captions></div>
+
+        <div class="tour__number" aria-hidden="true" data-scene-number><span>01</span></div>
+
+        <nav class="scene-nav" aria-label="Tour scenes" data-scene-nav></nav>
+
+        <div class="tour__hud">
+          <p class="scene-label" aria-live="polite" data-scene-label>
+            <span class="scene-label__name">Arrival</span>
+            <span class="scene-label__count">01 / 08</span>
+          </p>
+          <div class="tour__progress" aria-hidden="true"><i data-progress></i></div>
+          <span class="tour__timecode" aria-hidden="true"><b class="rec"></b><span data-timecode>00:00.0</span></span>
+        </div>
+
+        <div class="scroll-cue" data-cue aria-hidden="true">
+          <span class="scroll-cue__mouse"><i></i></span>
+          <span>Scroll to step inside</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AFTER THE FILM ============ -->
+    <div class="after">
+      <section class="section intro" id="overview" aria-labelledby="overview-title">
+        <div class="container">
+          <p class="eyebrow" data-reveal>The Residence</p>
+          <h2 class="statement" id="overview-title" data-fill></h2>
+
+          <div class="intro__grid">
+            <figure class="intro__img intro__img--a" data-reveal="mask">
+              <img data-parallax="0.12" src="assets/images/scenes/facade-md.webp" data-srcset="facade" sizes="(max-width: 760px) 92vw, 52vw" alt="Front elevation of the residence at golden hour" loading="lazy" decoding="async">
+            </figure>
+            <div class="intro__body">
+              <div class="prose" data-overview data-reveal></div>
+              <dl class="facts" data-facts></dl>
+            </div>
+            <figure class="intro__img intro__img--b" data-reveal="mask">
+              <img data-parallax="-0.1" src="assets/images/scenes/living-md.webp" data-srcset="living" sizes="(max-width: 760px) 92vw, 30vw" alt="Open-plan living room" loading="lazy" decoding="async">
+            </figure>
+            <div class="intro__aside">
+              <p class="eyebrow" data-reveal>Inside the residence</p>
+              <h3 class="intro__quote" data-split>Light-filled rooms that open to the garden, finished in <em>walnut, stone and marble.</em></h3>
+              <p class="intro__text" data-reveal>From the timber pivot door to the glass-balustrade staircase and the private balcony, every space in the film is shaped by natural light and warm, tactile materials.</p>
+              <ul class="intro__stats" data-reveal>
+                <li><b data-count="7">0</b><span>Rooms in the film</span></li>
+                <li><b data-count="13">0</b><span>Frames in the gallery</span></li>
+                <li><b data-count="35" data-suffix="s">0</b><span>Walkthrough film</span></li>
+              </ul>
+              <div class="intro__actions" data-reveal>
+                <a class="btn btn--accent" href="#rooms" data-magnetic><span>Explore the rooms</span><i aria-hidden="true">&rarr;</i></a>
+                <a class="link-arrow" href="#top"><span>Replay the film</span><i aria-hidden="true">&#8634;</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true" data-marquee>
+        <div class="marquee__track" data-marquee-track>
+          <span>Space <em>&amp;</em> Light</span><span class="o">Modern Elegance</span><span>Crafted Detail</span><span class="o">Room to Breathe</span>
+          <span>Space <em>&amp;</em> Light</span><span class="o">Modern Elegance</span><span>Crafted Detail</span><span class="o">Room to Breathe</span>
+        </div>
+      </div>
+
+      <section class="section rooms" id="rooms" aria-labelledby="rooms-title">
+        <div class="container rooms__head">
+          <div>
+            <p class="eyebrow" data-reveal>Room by Room</p>
+            <h2 class="display" id="rooms-title" data-split>Seven spaces, <em>one story.</em></h2>
+          </div>
+          <div class="carousel-ctrl">
+            <span class="carousel-ctrl__count"><b data-rooms-index>01</b> / <span data-rooms-total>07</span></span>
+            <button class="round-btn" type="button" data-rooms-play aria-label="Pause auto-rotate"></button>
+            <button class="round-btn" type="button" data-rooms-prev aria-label="Previous room" data-magnetic>&larr;</button>
+            <button class="round-btn" type="button" data-rooms-next aria-label="Next room" data-magnetic>&rarr;</button>
+          </div>
+        </div>
+        <div class="rail" data-rooms-rail tabindex="0" role="region" aria-label="Rooms carousel — use arrow keys or drag" data-cursor-label="Drag">
+          <ul class="rail__track" data-rooms></ul>
+        </div>
+        <div class="container"><div class="rail__progress" aria-hidden="true"><i data-rooms-progress></i></div></div>
+      </section>
+
+      <section class="section gallery" id="gallery" aria-labelledby="gallery-title">
+        <div class="container">
+          <header class="gallery__head">
+            <p class="eyebrow" data-reveal>Gallery</p>
+            <h2 class="display" id="gallery-title" data-split>Frames from <em>the film.</em></h2>
+          </header>
+
+          <div class="show" data-show tabindex="0" role="region" aria-roledescription="carousel" aria-label="Photo gallery">
+            <div class="show__stage" data-show-stage data-cursor-label="View"></div>
+            <div class="show__bar">
+              <div class="show__caption" aria-live="polite">
+                <span class="show__index" data-show-index>01</span>
+                <span class="show__text"><b data-show-caption>Front elevation</b><small data-show-room>Exterior</small></span>
+              </div>
+              <div class="show__ctrls">
+                <button class="round-btn round-btn--light" type="button" data-show-play aria-label="Pause slideshow"></button>
+                <button class="round-btn round-btn--light" type="button" data-show-prev aria-label="Previous image" data-magnetic>&larr;</button>
+                <button class="round-btn round-btn--light" type="button" data-show-next aria-label="Next image" data-magnetic>&rarr;</button>
+                <button class="round-btn round-btn--light" type="button" data-show-full aria-label="View full screen">&#x2922;</button>
+              </div>
+            </div>
+            <div class="show__timer" aria-hidden="true"><i data-show-timer></i></div>
+            <ul class="show__thumbs" data-show-thumbs aria-label="Choose an image"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section features" id="features" aria-labelledby="features-title">
+        <div class="container">
+          <div class="features__head">
+            <p class="eyebrow" data-reveal>As seen in the film</p>
+            <h2 class="display" id="features-title" data-split>Details that <em>stay with you.</em></h2>
+            <p class="note" data-reveal>Features visible in the walkthrough. Confirm against the official particulars.</p>
+          </div>
+          <ol class="feature-rows" data-features></ol>
+        </div>
+        <div class="hover-img" data-hover-img aria-hidden="true"><img alt=""></div>
+      </section>
+
+      <section class="section details" id="details" aria-labelledby="details-title">
+        <div class="container">
+          <div class="details__head">
+            <p class="eyebrow" data-reveal>The Details</p>
+            <h2 class="display" id="details-title" data-split>Everything <em>you need to know.</em></h2>
+          </div>
+          <div class="tabs" data-tabs>
+            <div class="tabs__list" role="tablist" aria-label="Property details">
+              <button role="tab" id="tab-specs" aria-controls="panel-specs" aria-selected="true">Specifications</button>
+              <button role="tab" id="tab-amenities" aria-controls="panel-amenities" aria-selected="false" tabindex="-1">Amenities</button>
+              <button role="tab" id="tab-plans" aria-controls="panel-plans" aria-selected="false" tabindex="-1">Floor Plans</button>
+              <button role="tab" id="tab-location" aria-controls="panel-location" aria-selected="false" tabindex="-1">Location</button>
+              <span class="tabs__ink" data-tabs-ink aria-hidden="true"></span>
+            </div>
+            <div class="tabs__panel" role="tabpanel" id="panel-specs" aria-labelledby="tab-specs" tabindex="0">
+              <p class="note">Figures marked <span class="tbc">To be confirmed</span> are awaiting verification.</p>
+              <dl class="spec-grid" data-specs></dl>
+            </div>
+            <div class="tabs__panel" role="tabpanel" id="panel-amenities" aria-labelledby="tab-amenities" tabindex="0" hidden>
+              <ul class="chip-list" data-amenities></ul>
+            </div>
+            <div class="tabs__panel" role="tabpanel" id="panel-plans" aria-labelledby="tab-plans" tabindex="0" hidden>
+              <div data-plans></div>
+            </div>
+            <div class="tabs__panel" role="tabpanel" id="panel-location" aria-labelledby="tab-location" tabindex="0" hidden>
+              <div data-location></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section model" aria-labelledby="model-title">
+        <div class="container">
+          <a class="model__card" href="explore-3d.html" data-reveal data-cursor-label="Open">
+            <img src="assets/images/scenes/landing-md.webp" alt="" loading="lazy" decoding="async" data-parallax="0.08">
+            <span class="model__text">
+              <span class="eyebrow eyebrow--light">Interactive 3D</span>
+              <span class="model__title" id="model-title">Explore the architecture in 3D</span>
+              <span class="model__status" data-model-status></span>
+            </span>
+            <span class="model__arrow" aria-hidden="true">&nearr;</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section enquire" id="enquire" aria-labelledby="enquire-title">
+        <div class="enquire__grid">
+          <div class="enquire__visual" data-reveal="mask">
+            <!-- Full 1920px source: the panel is portrait, so the landscape frame renders ~1.9k px wide. -->
+            <img data-parallax="0.06" src="assets/images/scenes/frontage.webp" width="1920" height="1080" alt="The front entrance of the residence in afternoon light" loading="lazy" decoding="async">
+            <div class="enquire__overlay">
+              <p class="eyebrow eyebrow--light">Private Viewing</p>
+              <h2 class="display display--light" id="enquire-title">Experience it <em>in person.</em></h2>
+              <dl class="contact-list" data-contact></dl>
+            </div>
+          </div>
+
+          <form class="form" data-enquiry novalidate>
+            <p class="form__lead" data-reveal>Viewings are by appointment only. Share a few details and we'll arrange a time that suits you.</p>
+            <div class="form__row">
+              <label class="field" data-reveal>
+                <input name="name" type="text" autocomplete="name" placeholder=" " required>
+                <span>Full name</span>
+              </label>
+              <label class="field" data-reveal>
+                <input name="email" type="email" autocomplete="email" placeholder=" " required>
+                <span>Email</span>
+              </label>
+            </div>
+            <div class="form__row">
+              <label class="field" data-reveal>
+                <input name="phone" type="tel" autocomplete="tel" placeholder=" ">
+                <span>Phone (optional)</span>
+              </label>
+              <label class="field field--date" data-reveal>
+                <input name="date" type="date" placeholder=" ">
+                <span>Preferred date (optional)</span>
+              </label>
+            </div>
+            <fieldset class="chips" data-reveal>
+              <legend>Preferred time</legend>
+              <label><input type="radio" name="time" value="Morning" checked><span>Morning</span></label>
+              <label><input type="radio" name="time" value="Afternoon"><span>Afternoon</span></label>
+              <label><input type="radio" name="time" value="Evening"><span>Evening</span></label>
+            </fieldset>
+            <label class="field" data-reveal>
+              <textarea name="message" rows="3" placeholder=" "></textarea>
+              <span>Message (optional)</span>
+            </label>
+            <label class="check" data-reveal>
+              <input name="consent" type="checkbox" required>
+              <span>I agree to be contacted about this property.</span>
+            </label>
+            <button class="btn btn--accent btn--lg" type="submit" data-magnetic data-reveal><span>Schedule a Private Viewing</span><i aria-hidden="true">&rarr;</i></button>
+            <p class="form__status" data-form-status role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <p class="footer__note">All imagery is taken from the property's walkthrough film. Details are subject to verification and do not form part of any contract.</p>
+        <button class="round-btn round-btn--light" type="button" data-to-top aria-label="Back to top" data-magnetic>&uarr;</button>
+      </div>
+      <p class="footer__giant" aria-hidden="true" data-giant>Aurelia</p>
+      <div class="footer__bottom">
+        <span>&copy; <span data-year></span> <span data-bind="name">The Aurelia Residence</span></span>
+        <a href="explore-3d.html">3D Model</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" data-lightbox aria-label="Gallery image">
+    <figure>
+      <img data-lightbox-img alt="">
+      <figcaption data-lightbox-caption></figcaption>
+    </figure>
+    <button class="round-btn round-btn--light lightbox__prev" type="button" data-lightbox-prev aria-label="Previous image">&larr;</button>
+    <button class="round-btn round-btn--light lightbox__next" type="button" data-lightbox-next aria-label="Next image">&rarr;</button>
+    <button class="lightbox__close" type="button" data-lightbox-close aria-label="Close">Close &times;</button>
+  </dialog>
+
+  <noscript>
+    <style>.tour{height:auto}.tour__sticky{position:relative}.preloader,.scroll-cue{display:none}[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}</style>
+  </noscript>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

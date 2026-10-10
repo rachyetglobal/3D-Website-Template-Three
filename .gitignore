@@ -1,0 +1,11 @@
+# Original master film (97.5 MB, near GitHub's 100 MB limit). The site uses the
+# optimised copies in assets/video/. Keep the master locally to re-run
+# tools/optimize-video.ps1, or store it with Git LFS.
+/realestate.mp4
+
+# OS / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+*.log

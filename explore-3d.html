@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>3D Model — The Aurelia Residence</title>
+  <meta name="theme-color" content="#0f0e0c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230f0e0c'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' fill='%23c9ab72' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { min-height: 100vh; background: var(--bone); color: var(--ink); }
+    .site-nav { grid-template-columns: 1fr auto; }
+    .viewer__notice .display { font-size: clamp(40px, 5vw, 72px); margin-bottom: 16px; color: var(--ink); }
+    .viewer__notice p:not(.eyebrow), .viewer__notice li { color: var(--muted); }
+    .viewer__panel .display { color: var(--ivory); font-size: clamp(36px, 4vw, 60px); }
+    .viewer { position: fixed; inset: 0; }
+    .viewer canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    .viewer__panel {
+      position: fixed; left: var(--gutter); bottom: calc(32px + env(safe-area-inset-bottom));
+      max-width: 520px; z-index: 5;
+    }
+    .viewer__panel p { color: var(--ivory-dim); margin: 16px 0 0; }
+    .viewer__notice {
+      position: fixed; inset: 0; display: grid; place-items: center; padding: 96px var(--gutter) 40px;
+    }
+    .viewer__notice .placeholder { max-width: 640px; }
+    .viewer__notice ol { text-align: left; margin: 16px 0 0; padding-left: 20px; }
+    .viewer__notice li { margin: 6px 0; }
+    .viewer__status { position: fixed; right: var(--gutter); bottom: calc(32px + env(safe-area-inset-bottom)); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ivory-dim); }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="site-nav is-light">
+    <a class="wordmark" href="index.html" aria-label="Back to the film tour">
+      <span class="wordmark__mark" aria-hidden="true" data-mark>A</span>
+      <span class="wordmark__name" data-bind="name">The Aurelia Residence</span>
+    </a>
+    <div class="site-nav__actions">
+      <a class="btn btn--pill" href="index.html"><span>&larr; Film tour</span></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="viewer" data-viewer hidden></div>
+    <div class="viewer__panel" data-panel hidden>
+      <p class="eyebrow eyebrow--light">Interactive 3D</p>
+      <h1 class="display">Explore the architecture.</h1>
+      <p>Drag to orbit, scroll or pinch to zoom, right-drag to pan.</p>
+    </div>
+    <p class="viewer__status" data-status role="status"></p>
+
+    <section class="viewer__notice" data-notice hidden>
+      <div class="placeholder">
+        <div>
+          <p class="eyebrow">Interactive 3D</p>
+          <h1 class="display">No model <em>yet.</em></h1>
+          <strong>No architectural model has been supplied yet.</strong>
+          <p>The film tour uses the residence's walkthrough video, which is not a 3D model. When a real GLB/GLTF model of this house is available:</p>
+          <ol>
+            <li>Copy it to <code>assets/models/</code> (e.g. <code>residence.glb</code>).</li>
+            <li>Set <code>PROPERTY.model.url</code> in <code>js/config.js</code> to <code>'assets/models/residence.glb'</code>.</li>
+            <li>Reload this page.</li>
+          </ol>
+          <p><a class="btn btn--accent" href="index.html" style="margin-top:16px"><span>Return to the film tour</span><i aria-hidden="true">&rarr;</i></a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/three-viewer.js"></script>
+</body>
+</html>

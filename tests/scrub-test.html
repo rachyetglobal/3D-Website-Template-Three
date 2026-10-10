@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scrub test</title>
+<style>
+  body { margin: 0; font: 13px/1.5 monospace; background: #111; color: #eee; }
+  iframe { width: 1280px; height: 720px; border: 0; display: block; }
+  pre { padding: 12px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<!--
+  Automated check for the scroll-scrubbed tour. Open via the local server:
+    http://localhost:8080/tests/scrub-test.html
+  It scrolls the page forward then backward and verifies, at each step, that
+  video.currentTime matches the scene map and that exactly the expected caption
+  is visible. Results appear below and in #result (PASS/FAIL).
+-->
+<iframe id="f" src="../index.html"></iframe>
+<pre id="out">running…</pre>
+<p id="result">PENDING</p>
+<script type="module">
+import { SCENES, MEDIA } from '../js/config.js';
+const out = document.getElementById('out');
+const log = (s) => { out.textContent += '\n' + s; };
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const f = document.getElementById('f');
+out.textContent = '';
+
+while (!f.contentDocument?.querySelector('.caption')) await sleep(50);
+const w = f.contentWindow, d = f.contentDocument;
+const tour = d.querySelector('[data-tour]');
+const video = d.querySelector('[data-video]');
+
+// Wait for the film.
+const t0 = performance.now();
+while (!tour.classList.contains('is-video-ready')) {
+  if (performance.now() - t0 > 60000) { log('FAIL video never became ready'); break; }
+  await sleep(100);
+}
+// The preloader locks scrolling until it finishes.
+while (!d.documentElement.classList.contains('is-ready')) await sleep(100);
+await sleep(300);
+log(`video ready after ${Math.round(performance.now() - t0)} ms, src=${video.currentSrc.slice(0, 40)}…, duration=${video.duration.toFixed(2)}, size=${video.videoWidth}x${video.videoHeight}`);
+
+const top = tour.offsetTop;
+const scrollable = tour.offsetHeight - w.innerHeight;
+const expected = (p) => {
+  let i = 0;
+  for (let k = SCENES.length - 1; k >= 0; k--) if (p >= SCENES[k].scroll[0]) { i = k; break; }
+  const s = SCENES[i];
+  const l = Math.min(1, Math.max(0, (p - s.scroll[0]) / (s.scroll[1] - s.scroll[0])));
+  return { i, t: Math.min(MEDIA.duration, s.time[0] + l * (s.time[1] - s.time[0])) };
+};
+const visibleCaptions = () => [...d.querySelectorAll('.caption')]
+  .map((el, i) => [i, parseFloat(el.style.opacity || '0')]).filter(([, o]) => o > 0.5).map(([i]) => i);
+
+async function settle() {
+  // wait until video is not seeking and time stable
+  let last = -1, stable = 0;
+  for (let n = 0; n < 80; n++) {
+    await sleep(50);
+    if (!video.seeking && Math.abs(video.currentTime - last) < 1e-3) { if (++stable >= 3) break; } else stable = 0;
+    last = video.currentTime;
+  }
+}
+
+let fails = 0;
+const points = [0.02, 0.1, 0.24, 0.36, 0.46, 0.56, 0.69, 0.83, 0.96];
+const run = [...points, ...[...points].reverse().slice(1)];
+let prevTime = -1, prevP = -1;
+for (const p of run) {
+  w.scrollTo(0, Math.round(top + p * scrollable));
+  await settle();
+  const e = expected(p);
+  const actual = video.currentTime;
+  const vis = visibleCaptions();
+  const label = d.querySelector('.scene-label__name').textContent;
+  const finalO = parseFloat(d.querySelector('[data-final]').style.opacity || '0');
+  const dirOk = prevP < 0 || (p > prevP ? actual >= prevTime - 0.01 : actual <= prevTime + 0.01);
+  const timeOk = Math.abs(actual - e.t) < 0.1;
+  const capOk = vis.length <= 1 && (vis.length === 0 || vis[0] === e.i);
+  const ok = timeOk && capOk && dirOk;
+  if (!ok) fails++;
+  log(`${ok ? 'ok  ' : 'FAIL'} p=${p.toFixed(2)} ${p > prevP ? 'fwd' : 'back'} expected t=${e.t.toFixed(2)} actual t=${actual.toFixed(2)} scene=${e.i + 1} caption=${vis.map((i) => i + 1).join(',') || '-'} label="${label}" finalStill=${finalO}`);
+  prevTime = actual; prevP = p;
+}
+
+// Seek latency: rapid jumps across the film, measure time until 'seeked'.
+const lat = [];
+for (const t of [30, 2, 20, 8, 33, 12, 25, 1]) {
+  const s = performance.now();
+  video.currentTime = t;
+  await new Promise((r) => video.addEventListener('seeked', r, { once: true }));
+  lat.push(Math.round(performance.now() - s));
+}
+log(`seek latency (ms) for random jumps: ${lat.join(', ')}`);
+
+// Scene nav click → correct scene.
+d.querySelectorAll('.scene-nav button')[3].click();
+await sleep(2500); await settle();
+log(`nav click scene 4 → label "${d.querySelector('.scene-label__name').textContent}", t=${video.currentTime.toFixed(2)}`);
+
+const errs = w.__errors || [];
+log(`page errors: ${errs.length}`);
+document.getElementById('result').textContent = fails ? `FAIL (${fails})` : 'PASS';
+</script>
+</body>
+</html>
